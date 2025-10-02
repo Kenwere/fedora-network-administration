@@ -1,1 +1,28 @@
 01 installing Fedora server 42 and Gui
+
+To begin installing Fedora Server 42 in VirtualBox, you must first download the official ISO file from getfedora.org
+. Once downloaded, open VirtualBox and create a new virtual machine. During setup, choose Linux as the type and Fedora (64-bit) as the version. Allocate at least 2 GB of RAM (more if you plan to use XFCE comfortably) and create a virtual hard disk of at least 20 GB. Next, attach the Fedora Server 42 ISO to the VM by opening Settings → Storage, selecting the empty disk icon, and choosing the ISO file. For better performance, assign at least two CPU cores under the System → Processor tab, and ensure the network adapter is enabled. Once these configurations are complete, start the virtual machine, which will boot into the Fedora installer.
+
+When the boot menu appears, select Install Fedora Server 42. The installer, called Anaconda, will guide you through language selection, keyboard layout, storage configuration, and user setup. You can allow the installer to partition the virtual hard drive automatically, set a root password, and create a user account. After installation finishes, reboot the virtual machine and remove the ISO from the storage settings so the system boots from the virtual hard disk.
+
+Once Fedora Server is running, log in with the user account you created. The first step is to update the system so that all packages are current. This can be done with:
+
+1.sudo dnf upgrade -y
+
+This command ensures the package repository metadata upgrades all installed packages to the latest versions. The -y flag automatically answers “yes” to prompts, which makes the update process non-interactive.
+
+Since Fedora Server does not include a graphical environment by default, you need to install XFCE manually. This is done with:
+
+2. sudo dnf install @xfce-desktop-environment
+
+This installs a predefined set of related packages—in this case, all the components required for XFCE, including the X.org display server.In this command, the @ symbol tells DNF that you’re installing a package group/environment rather than a single package.
+
+3.sudo systemctl set-default graphical.target
+This command makes the graphical target (multi-user system with GUI) the default startup mode instead of the text-only multi-user target.
+
+4.sudo reboot
+
+This reboots the system and, if your default systemd target is set to graphical, you’ll be greeted by the login manager (LightDM or GDM depending on what’s installed) and can log into an XFCE session.
+
+At this point, Fedora Server 42 should be running inside VirtualBox with XFCE configured as the default desktop environment, giving you a lightweight and responsive graphical interface while retaining all the strengths of Fedora Server in a virtualized environment.
+
