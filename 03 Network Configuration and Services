@@ -1,0 +1,9 @@
+View Current Network Settings 
+  1.nmcli connection show  -  uses NetworkManager’s CLI (Command Line Interface) to list all saved network connections.
+  2.ip addr show -  all network interfaces and their IP addresses
+
+Editing Network Configuration files
+  # nano /etc/sysconfig/network-scripts/ifcfg-eth0   - opens the configuration file for the eth0 network interface in the Network-Scripts directory, where static network settings (IP, gateway, DNS, etc.) are stored.
+
+Restart Networking 
+  # systemctl restart NetworkManager   -  restarts the NetworkManager service, which manages network connections on most modern Linux systems
