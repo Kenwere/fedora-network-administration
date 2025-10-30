@@ -1,0 +1,80 @@
+Navigating the File System 
+  1.pwd  -  (Print Working Directory): Displays the current directory. 
+  2.ls   -   (List): Lists files and directories in the current directory. 
+  3.cd   - (cd /path/to/directory): Change Directory, Navigate to a different directory. 
+  4. .    - (Current Directory): Represents the current directory. 
+  5. ..   -   (Parent Directory): Represents the parent directory.
+
+File and Directory Operations 
+  1.touch  - (touch filename): Create an empty file. 
+  2.mkdir  - (mkdir directoryname): Make Directory, Create a new directory. 
+  3.rm  - (rm filename): Remove, Delete files and directories.
+  4.rm -r   (rm -r directoryname): Remove a directory and its contents.
+  5.cp   - (cp source destination): Copy files or directories.
+  6.mv (mv oldfilename newfilename): Move or rename files or directories. 
+  7.grep (grep "fedora server" /desktop/fedora_file.txt): used to search for a pattern in a
+    file. 
+
+Viewing and Editing Files
+  1.cat (cat filename): Display the contents of a file.
+  2.more or less - (more filename or less filename): Paginate through file content.
+  3.nano or vim (nano filename or vim filename): Text editors for creating and editing
+    files.
+  4.head and tail - (head filename or tail filename): Display the beginning or end of a file. 
+
+System Information 
+  1.uname (uname -a): Display system information. 
+  2.df (df -h): Show disk space usage.
+  3.free (free -h): Display memory usage. 
+
+Process Management 
+  1.ps (ps aux): Process status, List running processes. 
+  2. kill (kill PID): Terminate processes by their process ID (PID). 
+
+
+User and Permission Management 
+  1.who: Display who is logged in. 
+  2.Chmod (chmod permissions filename): Change file permissions. 
+  3.chown (chown user:group filename): Change file ownership. 
+  4.sudo: Use the sudo command to run commands as the root user. This is necessary for
+    performing many administrative tasks. 
+
+Update the System
+  #sudo dnf update
+
+Set up a root password
+  #sudo passwd root
+
+Create a Regular User 
+  #sudo useradd -m username
+  #sudo passwd username
+  #sudo usermod -aG wheel username
+
+Switch Account
+  #su username 
+
+
+Configure Firewall
+  # sudo systemctl enable firewalld #enable the firewall
+  # sudo systemctl start firewalld #start the firewall
+  # sudo firewall-cmd --zone=public --permanent --add-service=ssh #allow SSH traffic
+  # sudo firewall-cmd –reload #make the changes permanent
+
+Hostname Configuration
+   # sudo hostnamectl set-hostname newhostname - sets a new hostname (computer name)
+
+Install Apache Server
+  #sudo dnf install httpd
+
+
+
+
+
+
+
+
+
+
+
+
+
