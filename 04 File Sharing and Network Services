@@ -1,0 +1,157 @@
+Samba File & Printer Sharing
+1. Installation
+
+    sudo dnf install samba - Install Samba package
+    
+    sudo dnf install cups - Install CUPS for printer sharing (optional)
+
+2. Firewall Configuration
+
+    sudo firewall-cmd --permanent --add-service=samba - Allow Samba traffic
+    
+    sudo firewall-cmd --permanent --add-port=139/tcp - Allow SMB port
+    
+    sudo firewall-cmd --permanent --add-port=445/tcp - Allow SMB port
+    
+    sudo firewall-cmd --reload - Apply firewall changes
+
+3. User & Directory Setup
+
+    sudo mkdir /path/to/share - Create shared directory
+    
+    sudo smbpasswd -a username - Add Samba user (use existing Linux user)
+
+4. Configuration File
+
+    sudo nano /etc/samba/smb.conf - Edit main config file
+    
+    Example Share Configuration:
+    
+    text
+    [share_name]
+    path = /path/to/shared/folder
+    browseable = yes
+    read only = no
+    valid users = username
+5. Service Management
+
+    sudo systemctl start smb - Start Samba service
+    
+    sudo systemctl enable smb - Enable on boot
+    
+    sudo systemctl restart smb - Restart after config changes
+
+6. Printer Sharing
+
+    sudo systemctl start cups - Start CUPS printing service
+    
+    sudo systemctl enable cups - Enable CUPS on boot
+    
+    Add to smb.conf:
+    
+    text
+    [printers]
+    path = /var/spool/samba
+    printable = yes
+    guest ok = no
+7. Testing & Connection
+
+    testparm - Validate configuration syntax
+    
+    smbclient //server_name/share_name -U username - Connect from Linux client
+    
+    Windows: \\server_name\share_name - Access from Windows Explorer
+
+NFS Server Setup
+1. Installation
+
+    sudo dnf install nfs-utils - Install NFS server package
+
+2. Directory Setup
+
+    sudo mkdir /shared - Create shared directory
+    
+    sudo chmod -R 755 /shared - Set appropriate permissions
+
+3. Export Configuration
+
+    sudo nano /etc/exports - Edit exports file
+    
+    Example Entry:
+    
+    /shared *(rw,sync,no_root_squash) - Share to all hosts
+    
+    /shared 192.168.1.0/24(rw,sync) - Share to specific network
+
+4. Service Management
+
+    sudo systemctl start nfs-server - Start NFS service
+    
+    sudo systemctl enable nfs-server - Enable on boot
+    
+    sudo exportfs -arv - Export all configured shares
+
+5. Firewall Configuration
+
+    sudo firewall-cmd --permanent --add-service=nfs - Allow NFS traffic
+    
+    sudo firewall-cmd --permanent --add-service=mountd - Allow mount service
+    
+    sudo firewall-cmd --permanent --add-service=rpc-bind - Allow RPC binding
+    
+    sudo firewall-cmd --reload - Apply firewall changes
+
+6. Client Access
+
+    sudo mount -t nfs server_name:/shared /mnt/mount_point - Mount on client
+    
+    Auto-mount: Add to /etc/fstab on client:
+    
+    server_name:/shared /mnt/mount_point nfs defaults 0 0
+
+FTP Server Configuration (vsftpd)
+1. Installation
+
+    sudo dnf install vsftpd - Install Very Secure FTP Daemon
+
+2. Service Management
+
+    sudo systemctl start vsftpd - Start FTP service
+    
+    sudo systemctl enable vsftpd - Enable on boot
+    
+    sudo systemctl restart vsftpd - Restart after config changes
+
+3. Configuration File
+
+    sudo nano /etc/vsftpd/vsftpd.conf - Edit main config
+
+    Key Options:
+    
+    anonymous_enable=YES/NO - Allow anonymous access
+    
+    local_enable=YES - Allow local users
+    
+    local_root=/path/to/ftp - Set FTP root directory
+    
+    listen_port=2121 - Change default port (optional)
+
+4. Firewall Configuration
+
+    sudo firewall-cmd --permanent --add-service=ftp - Allow FTP traffic
+    
+    sudo firewall-cmd --reload - Apply firewall changes
+
+5. User Management
+
+    sudo useradd -m ftpuser - Create FTP user
+    
+    sudo passwd ftpuser - Set user password
+
+6. Testing & Troubleshooting
+
+    FTP Client: Connect using FileZilla or command line
+    
+    Log Checking: journalctl -xe | grep vsftpd - Check for errors
+    
+    Test Connection: ftp your_server_ip - Test from client
