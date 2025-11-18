@@ -1,9 +1,172 @@
-View Current Network Settings 
-  1.nmcli connection show  -  uses NetworkManager’s CLI (Command Line Interface) to list all saved network connections.
-  2.ip addr show -  all network interfaces and their IP addresses
+Network Interface Configuration
+1. View Current Settings
 
-Editing Network Configuration files
-  # nano /etc/sysconfig/network-scripts/ifcfg-eth0   - opens the configuration file for the eth0 network interface in the Network-Scripts directory, where static network settings (IP, gateway, DNS, etc.) are stored.
+    nmcli connection show - List all NetworkManager connections.
+    
+    ip addr show - Display IP addresses for all interfaces.
 
-Restart Networking 
-  # systemctl restart NetworkManager   -  restarts the NetworkManager service, which manages network connections on most modern Linux systems
+2. Edit Configuration Files
+
+    nano /etc/sysconfig/network-scripts/ifcfg-eth0 - Edit configuration for interface eth0.
+    
+    Key Parameters:
+    
+    BOOTPROTO=static - Set to static for a fixed IP or dhcp for dynamic.
+    
+    IPADDR=192.168.1.100 - The static IP address.
+    
+    NETMASK=255.255.255.0 - The subnet mask.
+    
+    GATEWAY=192.168.1.1 - The default gateway.
+    
+    DNS1=8.8.8.8 - Primary DNS server.
+    
+    ONBOOT=yes - Enable interface on boot.
+
+3. Restart Networking
+
+    systemctl restart NetworkManager - Apply changes made to config files.
+
+4. Command-Line Tool (nmcli)
+
+    nmcli connection add con-name "MyConnection" ifname eth0 type ethernet ip4 192.168.1.100/24 gw4 192.168.1.1 - Create a new connection.
+    
+    nmcli connection modify "MyConnection" ipv4.dns "8.8.8.8" - Set DNS for a connection.
+    
+    nmcli connection up "MyConnection" - Activate a connection.
+
+5. Troubleshooting
+
+    ping google.com - Test network connectivity.
+    
+    traceroute google.com - Trace the path to a host.
+
+
+DHCP Server Setup
+1. Installation
+
+    sudo dnf install dhcp - Install the DHCP server package.
+
+2. Configuration File
+
+    nano /etc/dhcp/dhcpd.conf - Edit the main configuration file.
+
+3. Static IP Reservation
+
+    Example:
+    
+    text
+    host my-client {
+      hardware ethernet 00:66:77:88:99:33;
+      fixed-address 192.168.1.10;
+    }
+
+4. Service Management
+
+    sudo systemctl enable dhcpd - Enable on boot.
+    
+    sudo systemctl start dhcpd - Start the service.
+    
+    sudo systemctl status dhcpd - Check status.
+
+5. Firewall Configuration
+
+    sudo firewall-cmd --add-service=dhcp --permanent - Allow DHCP traffic.
+    
+    sudo firewall-cmd --reload - Reload firewall rules.
+
+6. Troubleshooting
+
+    cat /var/lib/dhcpd/dhcpd.leases - View active DHCP leases.
+
+DNS Server Setup (BIND)
+1. Installation
+
+    sudo dnf install bind - Install the BIND package.
+
+2. Main Configuration
+
+    nano /etc/named.conf - Edit the main config file.
+    
+    Key Directives:
+    
+    listen-on port 53 { 192.168.1.10; }; - Specify IP to listen on.
+    
+    allow-query { 192.168.1.0/24; }; - Define which clients can query.
+
+3. Zone Configuration
+
+    In /etc/named.conf:
+    
+    text
+    zone "example.com" {
+      type master;
+      file "/var/named/example.com.zone";
+    };
+4. Zone File Creation
+
+    nano /var/named/example.com.zone - Create a zone file.
+    
+    Example Records:
+    
+    text
+    @    IN    NS    ns1.example.com.
+    @    IN    A     192.168.1.1
+    www  IN    A     192.168.1.2
+5. Service Management
+
+    sudo systemctl start named - Start the DNS service.
+    
+    sudo systemctl enable named - Enable on boot.
+
+6. Validation & Testing
+
+    sudo named-checkconf - Check main config for errors.
+    
+    dig example.com - Test DNS resolution.
+
+7. Firewall Configuration
+
+    sudo firewall-cmd --add-service=dns --permanent - Allow DNS traffic.
+    
+    sudo firewall-cmd --reload - Reload firewall.
+
+
+Network Time Synchronization (NTP)
+1. Installation
+
+    sudo dnf install ntp - Install the NTP package.
+
+2. Configuration
+
+    nano /etc/ntp.conf - Edit the configuration file.
+    
+    Specify Time Servers:
+    
+    text
+    server 0.fedora.pool.ntp.org iburst
+    server 1.fedora.pool.ntp.org iburst
+3. Service Management
+
+    sudo systemctl start ntpd - Start the NTP service.
+    
+    sudo systemctl enable ntpd - Enable on boot.
+
+4. Verification
+
+    sudo systemctl status ntpd - Check service status.
+    
+    ntpq -p - View synchronization status with peers.
+
+5. Firewall Configuration
+
+    sudo firewall-cmd --add-service=ntp --permanent - Allow NTP traffic.
+    
+    sudo firewall-cmd --reload - Reload firewall.
+
+6. Timezone Setting
+
+    timedatectl set-timezone Your/Timezone - Set the server timezone.
+    
+    timedatectl status - View current time and timezone settings.
+
