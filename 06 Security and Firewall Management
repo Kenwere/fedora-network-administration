@@ -1,0 +1,150 @@
+1. Service Management
+
+    sudo systemctl status firewalld - Check firewall status
+    
+    sudo systemctl start firewalld - Start firewall service
+    
+    sudo systemctl enable firewalld - Enable auto-start on boot
+
+2. Zone Management
+
+    sudo firewall-cmd --get-zones - List all available zones
+    
+    sudo firewall-cmd --set-default-zone=public - Change default zone
+    
+    sudo firewall-cmd --zone=public --list-all - View rules for specific zone
+
+3. Service & Port Management
+
+    sudo firewall-cmd --zone=public --add-service=http --permanent - Allow HTTP service
+    
+    sudo firewall-cmd --zone=public --add-port=8080/tcp --permanent - Allow custom port
+    
+    sudo firewall-cmd --zone=public --remove-service=http --permanent - Remove service
+    
+    sudo firewall-cmd --zone=public --remove-port=8080/tcp --permanent - Remove port
+
+4. Advanced Configuration
+
+    sudo firewall-cmd --zone=public --add-masquerade --permanent - Enable NAT masquerading
+    
+    sudo firewall-cmd --reload - Apply all configuration changes
+
+5. Rich Rules (Advanced)
+
+    Use --add-rich-rule and --remove-rich-rule for complex filtering rules
+
+Intrusion Detection/Prevention (Suricata)
+1. Installation
+
+    sudo dnf install suricata - Install Suricata IDS/IPS
+
+2. Configuration
+
+    sudo nano /etc/suricata/suricata.yaml - Edit main configuration file
+    
+    Key Settings:
+    
+    Network interface to monitor
+    
+    Rule file locations (/etc/suricata/rules/)
+    
+    Logging directories
+    
+    Alert thresholds
+
+3. Rule Management
+
+    sudo suricata-update - Download and update threat rules
+
+    Rule Sources: Emerging Threats (ET), Snort rulesets
+
+4. Service Management
+
+    sudo systemctl start suricata - Start Suricata in IDS mode
+    
+    sudo systemctl enable suricata - Enable auto-start
+
+5. Monitoring & Logs
+
+    cat /var/log/suricata/fast.log - View security alerts
+    
+    /var/log/suricata/ - Main log directory
+
+6. IPS Mode
+
+    Edit suricata.yaml to enable prevention mode
+    
+    Caution: Can block legitimate traffic if misconfigured
+
+7. Maintenance
+
+    Regular rule updates
+    
+    Fine-tune rules to reduce false positives
+    
+    Continuous monitoring and response planning
+
+OpenVPN Server Setup
+1. Installation
+
+    sudo dnf install openvpn - Install OpenVPN package
+
+2. Server Configuration
+
+    sudo mkdir /etc/openvpn/server - Create server directory
+    
+    sudo cp /usr/share/doc/openvpn/sample/sample-config-files/server.conf /etc/openvpn/server/ - Copy sample config
+    
+    sudo nano /etc/openvpn/server/server.conf - Edit server configuration
+
+3. Key Configuration Parameters
+
+    bash
+    port 1194
+    proto udp
+    dev tun
+    server 10.8.0.0 255.255.255.0
+    push "redirect-gateway def1 bypass-dhcp"
+    push "dhcp-option DNS 8.8.8.8"
+4. Certificate Generation
+
+    cd /etc/openvpn/server - Navigate to server directory
+    
+    sudo openssl dhparam -out dh.pem 2048 - Generate DH parameters
+    
+    sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -x509 -keyout ca.key -out ca.crt - Generate CA
+    
+    sudo openssl req -new -newkey rsa:2048 -days 365 -nodes -keyout server.key -out server.crt - Generate server cert
+
+5. Network Configuration
+
+    sudo nano /etc/sysctl.conf - Enable IP forwarding
+    
+    Add: net.ipv4.ip_forward = 1
+    
+    sudo sysctl -p - Apply kernel changes
+
+6. Firewall & NAT Configuration
+
+    sudo firewall-cmd --permanent --add-port=1194/udp - Allow OpenVPN port
+    
+    sudo firewall-cmd --permanent --add-masquerade - Enable NAT for VPN clients
+    
+    sudo firewall-cmd --reload - Apply firewall changes
+
+7. Service Management
+
+    sudo systemctl start openvpn@server - Start OpenVPN service
+    
+    sudo systemctl enable openvpn@server - Enable auto-start
+
+8. Client Setup
+
+    Generate client certificates using easy-rsa
+    
+    Create client configuration file (.ovpn)
+    
+    Transfer certs and config to client securely
+    
+    Connect using: openvpn --config client-config.ovpn
