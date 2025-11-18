@@ -1,0 +1,115 @@
+Apache HTTP Server Installation
+1. System Preparation
+
+    sudo dnf update - Update system packages
+    
+    sudo dnf install httpd - Install Apache web server
+
+2. Service Management
+
+    sudo systemctl start httpd - Start Apache service
+    
+    sudo systemctl enable httpd - Enable auto-start on boot
+    
+    sudo systemctl restart httpd - Restart after configuration changes
+
+3. Firewall Configuration
+
+    sudo firewall-cmd --add-service=http --permanent - Allow HTTP traffic
+    
+    sudo firewall-cmd --reload - Apply firewall changes
+
+4. Verification
+
+    Access http://your_server_ip in web browser - Check default test page
+
+5. Directory Structure
+
+    /etc/httpd/ - Main configuration directory
+    
+    /etc/httpd/conf/httpd.conf - Primary configuration file
+    
+    /etc/httpd/conf.d/ - Additional configuration files
+    
+    /var/www/html/ - Default web content directory
+
+Virtual Host Configuration
+1. Create Site Directories
+
+    sudo mkdir -p /var/www/html/example1 - Create directory for site 1
+    
+    sudo mkdir -p /var/www/html/example2 - Create directory for site 2
+
+2. Set Permissions
+
+    sudo chown -R apache:apache /var/www/html/example1 - Set Apache ownership
+    
+    sudo chown -R apache:apache /var/www/html/example2 - Set Apache ownership
+
+3. Create Virtual Host Files
+
+    sudo nano /etc/httpd/conf.d/example1.conf - Create config for first site
+    
+    sudo nano /etc/httpd/conf.d/example2.conf - Create config for second site
+
+4. Virtual Host Configuration Example
+
+    apache
+    <VirtualHost *:80>
+      ServerAdmin webmaster@example1.com
+      DocumentRoot /var/www/html/example1
+      ServerName example1.com
+      ServerAlias www.example1.com
+      ErrorLog /var/log/httpd/example1-error.log
+      CustomLog /var/log/httpd/example1-access.log combined
+    </VirtualHost>
+5. Validation & Activation
+
+    sudo apachectl configtest - Check configuration syntax
+    
+    sudo systemctl restart httpd - Apply configuration changes
+
+6. DNS Setup
+
+Configure domain DNS records to point to server IP address
+
+SSL/TLS Certificate Setup
+1. Installation
+
+    sudo dnf install httpd mod_ssl certbot python3-certbot-apache - Install required packages
+
+2. Verify SSL Module
+
+    sudo apachectl -M | grep ssl - Check if mod_ssl is enabled
+
+    sudo a2enmod ssl - Enable SSL module (if not active)
+
+3. Obtain Certificates
+
+    sudo certbot --apache -d example.com -d www.example.com - Get certificates for domain
+
+4. Certificate Renewal
+
+    sudo certbot renew --dry-run - Test automatic renewal process
+
+    Auto-renewal: Certbot configures automatic renewal by default
+
+5. Firewall for HTTPS
+
+    sudo firewall-cmd --permanent --add-service=https - Allow HTTPS traffic
+
+    sudo firewall-cmd --reload - Apply firewall changes
+
+6. SSL Verification
+
+    openssl s_client -connect example.com:443 - Test SSL connection
+    
+    Access https://example.com in browser - Verify HTTPS works
+
+7. Security Hardening (Optional)
+
+    Enable HSTS (HTTP Strict Transport Security)
+    
+    Implement security headers
+
+Regular system and software updates
