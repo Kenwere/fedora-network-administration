@@ -1,0 +1,185 @@
+Network Monitoring Tools
+Nagios Setup
+1. Installation
+
+    sudo dnf install nagios - Install Nagios core
+    
+    sudo dnf install nagios-plugins-all - Install monitoring plugins
+
+2. Service Management
+
+    sudo systemctl start nagios - Start Nagios service
+    
+    sudo systemctl enable nagios - Enable auto-start
+
+3. Web Interface
+
+    Access: http://your-server/nagios
+    
+    Default credentials: nagiosadmin / (set during installation)
+
+4. Configuration
+
+    Configuration files: /etc/nagios/
+    
+    Define hosts, services, and notifications
+
+Zabbix Setup
+1. Installation
+
+    sudo dnf install https://repo.zabbix.com/zabbix/5.4/rhel/8/x86_64/zabbix-release-5.4-1.el8.noarch.rpm - Add Zabbix repository
+    
+    sudo dnf install zabbix-server-mysql zabbix-web-mysql zabbix-appliance - Install Zabbix components
+
+2. Database Setup
+
+    sql
+    CREATE DATABASE zabbix CHARACTER SET utf8 COLLATE utf8_bin;
+    CREATE USER 'zabbix'@'localhost' IDENTIFIED BY 'your_password';
+    GRANT ALL PRIVILEGES ON zabbix.* TO 'zabbix'@'localhost';
+    zcat /usr/share/doc/zabbix-server-mysql*/create.sql.gz | mysql -uzabbix -p zabbix - Import schema
+
+3. Configuration
+
+    sudo nano /etc/zabbix/zabbix_server.conf - Set database password
+    
+    sudo systemctl start zabbix-server zabbix-agent httpd - Start services
+    
+    sudo systemctl enable zabbix-server zabbix-agent httpd - Enable auto-start
+
+4. Web Interface
+
+    Access: http://your-server/zabbix
+    
+    Default credentials: Admin / zabbix
+
+System and Network Performance Tuning
+1. System Updates
+
+    sudo dnf update - Keep system updated
+
+2. Performance Monitoring
+
+    top, htop, glances - Monitor system resources
+    
+    Identify CPU, memory, and disk bottlenecks
+
+3. Memory Optimization
+
+    sudo nano /etc/sysctl.conf - Add: vm.swappiness = 10
+    
+    sudo sysctl -p - Apply changes (reduces swap usage)
+
+4. Filesystem Optimization
+
+    fstab options: noatime,nodiratime - Reduce disk writes
+    
+    SSD Trim: sudo systemctl enable fstrim.timer - Enable periodic TRIM
+
+5. Kernel Tuning
+
+      /etc/sysctl.conf modifications:
+      
+      net.core.somaxconn - Increase connection queue
+      
+      net.core.netdev_max_backlog - Improve network buffer
+      
+      net.ipv4.tcp_max_syn_backlog - Enhance TCP performance
+
+6. File Limits
+
+    sudo nano /etc/security/limits.conf:
+
+    text
+    * soft nofile 65535
+    * hard nofile 65535
+    sudo nano /etc/security/limits.d/20-nproc.conf - Adjust process limits
+
+7. Service Management
+
+    sudo systemctl disable service-name - Disable unnecessary services
+
+    Free up system resources
+
+8. Filesystem Selection
+
+    Consider XFS or Btrfs for performance
+    
+    Choose based on workload requirements
+
+Network Troubleshooting
+1. Basic Connectivity Checks
+
+    nmcli or ip a - Check interface status and IP addresses
+    
+    ping -c 4 8.8.8.8 - Test internet connectivity
+    
+    ping -c 4 gateway-ip - Test local network connectivity
+
+2. DNS Resolution
+
+    cat /etc/resolv.conf - Check DNS servers
+    
+    cat /etc/nsswitch.conf - Verify resolution order
+    
+    dig example.com or nslookup example.com - Test DNS resolution
+
+3. Firewall Verification
+
+    sudo firewall-cmd --list-all - View current rules
+    
+    sudo firewall-cmd --add-service=http --permanent - Allow services as needed
+    
+    sudo firewall-cmd --reload - Apply changes
+
+4. Service Restarts
+
+    sudo systemctl restart NetworkManager - Restart network manager
+    
+    sudo systemctl restart network - Alternative restart command
+
+5. Physical Connectivity
+
+    Check network cables and physical connections
+    
+    Verify switch/router ports are active
+    
+    Test with different network connection
+
+6. Security Services
+
+    setenforce 0 - Temporarily disable SELinux for testing
+    
+    Check host-based firewall rules
+
+7. Log Analysis
+
+    tail -f /var/log/messages - System messages
+    
+    journalctl -xe - Systemd journal
+    
+    dmesg - Kernel messages
+
+8. Configuration Validation
+
+    Review /etc/sysconfig/network-scripts/ifcfg-* - Interface configurations
+    
+    Check /etc/sysconfig/network - Global network settings
+    
+    Verify /etc/hosts - Local hostname resolution
+
+9. Routing Issues
+
+    ip route show - View routing table
+    
+    traceroute google.com - Trace network path
+
+10. DHCP Problems
+    - Check DHCP server availability
+    - Verify lease pools and timing
+    - Review /var/log/messages for DHCP errors
+
+11. Final Resolution
+    - Server reboot if issues persist
+    - Check for IP address conflicts
+    - Verify network hardware functionality
