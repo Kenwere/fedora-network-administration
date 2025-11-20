@@ -34,7 +34,7 @@ Network Interface Configuration
 
 4. Command-Line Tool (nmcli)
 
-    nmcli connection add con-name "MyConnection" ifname eth0 type ethernet ip4 192.168.1.100/24 gw4 192.168.1.1 - Create a new connection.
+    nmcli connection add con-name "MyConnection" ifname eth0 type ethernet ip4 192.168.1.100/24 gw4 192.168.1.1 - Create a new connection,adds a static IP
     
     nmcli connection modify "MyConnection" ipv4.dns "8.8.8.8" - Set DNS for a connection.
     
