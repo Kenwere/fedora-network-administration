@@ -55,7 +55,7 @@ DHCP Server Setup
     sudo dnf install dhcp-server -y -lets your system serve IPs to other devices.
 
 
-    sudo dnf install dhcp - Install the DHCP server package.
+    sudo dnf install dhcp - Install the DHCP server package.(doesnt work)
 
 2. Configuration File
 
