@@ -50,6 +50,11 @@ Network Interface Configuration
 DHCP Server Setup
 1. Installation
 
+    sudo dnf install dhclient -y -allows your system to get an IP via DHCP.
+
+    sudo dnf install dhcp-server -y -lets your system serve IPs to other devices.
+
+
     sudo dnf install dhcp - Install the DHCP server package.
 
 2. Configuration File
