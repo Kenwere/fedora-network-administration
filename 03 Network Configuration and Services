@@ -24,6 +24,11 @@ Network Interface Configuration
     ONBOOT=yes - Enable interface on boot.
 
 3. Restart Networking
+    sudo dnf install NetworkManager -y - install network manager
+
+    sudo systemctl enable NetworkManager- enables network manager
+
+    sudo systemctl start NetworkManager-start network manager
 
     systemctl restart NetworkManager - Apply changes made to config files.
 
