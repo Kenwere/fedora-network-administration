@@ -1,0 +1,200 @@
+Introduction to Network Administration
+1. Network Administration Basics
+    Definition: Managing and maintaining computer networks
+    
+    Core Tasks:
+    
+    Configuring network devices
+    
+    Monitoring network performance
+    
+    Troubleshooting network problems
+    
+    Ensuring network security
+
+2. Computer Networks
+    Network: Two or more connected computers that can communicate
+    
+    Key Functions:
+    
+        Resource sharing (files, printers, internet)
+        
+        Communication (email, messaging)
+        
+        Node: Any device connected to the network
+        
+        Examples: computers, printers, routers, switches
+        
+        Identified by unique addresses (IP or MAC)
+
+3. Communication Protocols
+    Purpose: Define rules and data formats for network communication
+    
+    Common Protocols:
+    
+    Ethernet: Hardware/link layer for local networks
+    
+    TCP/IP Suite: Protocol set for internet communication
+
+4. Network Administrator Roles & Responsibilities
+    Primary Focus: Configuring, commissioning, and maintaining network infrastructure
+    
+    Key Activities:
+    
+    Configure network devices (routers, switches, firewalls, VPN gateways)
+    
+    Create and manage DMZs (De-Militarized Zones)
+    
+    Allocate and manage IP addresses
+    
+    Configure network services (DHCP, DNS, FTP, HTTP, NFS)
+
+    Additional Responsibilities:
+    
+        Ensure network connectivity
+        
+        Monitor and manage network performance
+        
+        Test for security breaches
+        
+        Update Access Control Lists (ACLs)
+        
+        Enforce security controls
+        
+        Manage network traffic and bandwidth
+        
+        Troubleshoot network problems
+        
+        Backup/restore network data
+        
+        Plan and implement network upgrades
+
+5. Linux and TCP/IP Concepts
+    Linux: Free, open-source Unix-like operating system
+    
+    Widely used for servers, workstations, embedded devices
+    
+    Popular distributions:
+    
+    Ubuntu, Debian, Fedora, CentOS, openSUSE
+    
+    Arch Linux, Linux Mint, Kali Linux, Gentoo
+
+TCP/IP Protocol Suite (Four Layers):
+
+    Application Layer: HTTP, FTP, SMTP
+    
+    Transport Layer: TCP, UDP
+    
+    Internet Layer: IP (routing)
+    
+    Network Access Layer: Ethernet, Wi-Fi
+
+Key Networking Concepts:
+
+    IP Addresses: Unique identifiers for network hosts
+    
+    Subnet Masks: Divide networks into smaller segments
+    
+    Gateways: Connect multiple networks
+    
+    DNS Servers: Resolve hostnames to IP addresses
+    
+    Routing Protocols: Determine optimal data paths
+
+6. Network Clients
+    Definition: Software that initiates connections to remote servers
+    
+    Common Types:
+    
+    Web Browsers: Chrome, Firefox, Edge (HTTP requests)
+    
+    Email Clients: Outlook, Thunderbird (IMAP/POP3/SMTP)
+    
+    FTP Clients: FileZilla, WinSCP (file transfers)
+    
+    SSH Clients: OpenSSH, PuTTY (secure remote access)
+    
+    API Clients: Requests, Axios (web API interaction)
+    
+    Database Clients: MySQL Workbench, pgAdmin
+    
+    Remote Desktop Clients: RDP, VNC clients
+    
+    DNS Clients: nslookup, dig (domain resolution)
+
+7. System Initialization (Booting)
+    Process Steps:
+    
+    Power-On/Reset: Hardware activation
+    
+    Firmware Initialization: BIOS/UEFI runs POST test
+    
+    Boot Device Selection: Determines OS source
+    
+    Bootloader Execution: GRUB/NTLDR loads kernel
+    
+    OS Kernel Loading: Core OS into memory
+    
+    Kernel Initialization: Hardware setup, driver configuration
+    
+    User-Space Initialization: System services start
+    
+    User Login: Authentication prompt
+    
+    GUI Initialization (Optional): Graphical interface loads
+    
+    Applications Launch: User programs start
+    
+    Key Tasks During Initialization:
+    
+    Hardware health check
+    
+    OS loading
+    
+    Device initialization
+    
+    System configuration
+    
+    Service startup
+    
+    Application launching
+
+8. Remote Administration Tools
+    Remote Desktop Services:
+    
+    Windows RDS, VNC (TightVNC, RealVNC)
+    
+    Secure Shell (SSH):
+    
+    Encrypted command-line access for Unix/Linux
+    
+    Remote Access Software:
+    
+    TeamViewer, AnyDesk, Splashtop, Chrome Remote Desktop
+    
+    System Management Tools:
+    
+    Puppet, Ansible (automation)
+    
+    Remote Desktop Manager
+    
+    Remote Administration Protocols:
+    
+    PowerShell Remoting (Windows)
+    
+    SSH (Linux/Unix)
+    
+    VPN Solutions:
+    
+    OpenVPN, Cisco AnyConnect (secure network access)
+    
+    Web-Based Tools:
+    
+    Webmin (Unix administration)
+    
+    cPanel (web hosting management)
+    
+    Cloud Management:
+
+AWS Console, Azure Portal, Google Cloud Console
