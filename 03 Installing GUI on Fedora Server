@@ -1,0 +1,77 @@
+Installing GUI on Fedora Server
+Note: Use root account or sudo for all commands
+
+1. Available Desktop Environments
+    GNOME: Default Fedora desktop - polished and user-friendly
+    
+    KDE Plasma: Customizable and lightweight
+    
+    Xfce: Fast and ideal for limited resources
+
+2. Installation Steps
+System Update
+
+bash
+sudo dnf update -y
+Updates all system packages to latest versions
+
+-y flag automatically answers "yes" to prompts
+
+Install Desktop Environment (choose one)
+
+    bash
+    # GNOME (Full server with GUI)
+    sudo dnf groupinstall "Server with GUI" -y
+    
+    # GNOME (Workstation version)
+    sudo dnf groupinstall "Workstation" -y
+    
+    # KDE Plasma
+    sudo dnf groupinstall "KDE Plasma Workspaces" -y
+    
+    # Xfce (Lightweight)
+    sudo dnf groupinstall "Xfce Desktop" -y
+groupinstall: Installs a complete package group, not just single packages
+
+Each command installs desktop environment with all required components
+
+Enable Graphical Boot
+
+    bash
+    sudo systemctl set-default graphical.target
+    Sets system to boot into graphical mode by default
+
+Changes from multi-user.target (text mode) to graphical.target
+
+Reboot System
+
+    bash
+    sudo reboot
+    Restarts the server to apply all changes
+
+System should now boot to GUI login screen
+
+3. Post-Installation Commands
+Manual GUI Start (if needed):
+
+    bash
+    sudo systemctl start graphical.target
+    Starts the GUI immediately without rebooting
+    
+    Use if system boots to command line instead of GUI
+
+Install System Info Tool:
+
+    bash
+    sudo dnf install screenfetch
+    screenfetch
+    dnf install: Downloads and installs the screenfetch package
+    
+    screenfetch: Displays system information and Fedora logo in terminal
+
+4. Package Manager Note
+    DNF (used above): Modern package manager with better dependency resolution
+    
+    YUM: Older package manager that DNF replaced
+    
+    Both manage software installation, updates, and removal
