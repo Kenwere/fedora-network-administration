@@ -1,3 +1,44 @@
+Fedora Server Administration
+
+Key Features:
+
+    Security (SELinux, firewalld, AppArmor)
+    
+    High performance for demanding applications
+    
+    Flexibility for various server roles
+    
+    Strong community support
+
+Common Applications:
+
+    Web servers (Apache, Nginx)
+    
+    Database servers (MySQL, PostgreSQL)
+    
+    Mail servers (Postfix, Exim)
+    
+    File servers, virtualization (KVM), and development environments
+
+Network Administration Tasks
+    IP Management: Assign IPs, configure DHCP, static routes
+    
+    DNS: Setup and troubleshooting of DNS records (A, CNAME, MX)
+    
+    Security: Firewall management (firewalld/iptables), traffic monitoring
+    
+    Services: Configure DHCP, DNS, NTP, FTP servers
+    
+    Routing/Switching: VLAN setup, routing optimization
+    
+    Monitoring: Tools like Nagios, Zabbix, Prometheus
+    
+    VPNs: Setup OpenVPN/IPsec for secure access
+    
+    File Sharing: NFS/Samba configuration
+    
+    Backup & Recovery: Implement disaster recovery plans
+
 Navigating the File System 
   1.pwd  -  (Print Working Directory): Displays the current directory. 
   2.ls   -   (List): Lists files and directories in the current directory. 
